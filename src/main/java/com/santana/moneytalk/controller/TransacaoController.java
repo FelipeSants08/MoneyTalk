@@ -24,8 +24,9 @@ public class TransacaoController {
         return transacaoService.pegarTransacoes();
     }
 
+    @PostMapping
     public TransacaoRequest criar(@RequestBody TransacaoRequest request){
-        return null;
+        return transacaoService.criarTransacao(request);
     }
 
 }
