@@ -1,6 +1,10 @@
 package com.santana.moneytalk.service;
 
+import com.santana.moneytalk.domain.dto.request.AlteraTransacao;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
+import com.santana.moneytalk.domain.dto.response.CategoriaResponse;
+import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
+import com.santana.moneytalk.domain.model.Categoria;
 import com.santana.moneytalk.domain.model.Transacao;
 import com.santana.moneytalk.repository.TransacaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,22 +18,37 @@ public class TransacaoService {
 
     private final TransacaoRepository repository;
 
-    public List<Transacao> findAll(){
-        return repository.findAll();
-    }
 
     public void salvar(Transacao transacao){
         repository.save(transacao);
     }
 
-    public void alterar(Long id, TransacaoRequest transacao){
+    public void alterar(Long id, AlteraTransacao transacao){
         var transacaoEntity = findById(id);
-        transacaoEntity.setValor(transacao.valor());
-        transacaoEntity.setDescricao(transacao.descricao());
-        //transacaoEntity.setCategoria(transacao.categoria());
-        transacaoEntity.setTipo(transacao.tipo());
-        transacaoEntity.setDataTransacao(transacao.dataTransacao());
+        transacaoEntity = Transacao.builder()
+                .valor(transacao.valor() != null ? transacao.valor() : transacaoEntity.getValor())
+                .descricao(transacao.descricao() != null ? transacao.descricao() : transacaoEntity.getDescricao())
+                .dataTransacao(transacao.dataTransacao() != null ? transacao.dataTransacao() : transacaoEntity.getDataTransacao())
+                .build();
         repository.save(transacaoEntity);
+    }
+
+    public List<TransacaoResponse> pegarTransacoes(){
+        List<Transacao> transacoes = repository.findAll();
+        return transacoes.stream()
+                .map(t -> new TransacaoResponse(
+                        t.getId(),
+                        t.getValor(),
+                        new CategoriaResponse(t.getCategoria().getNome()),
+                        t.getTipo().toString(),
+                        t.getDataTransacao().toString(),
+                        t.getDescricao()
+                )).toList();
+    }
+
+    public Transacao mapearTrasacao(TransacaoRequest request, Categoria categoria){
+        Transacao transacao = new Transacao(request, categoria);
+        return transacao;
     }
 
     public Transacao findById(Long id){

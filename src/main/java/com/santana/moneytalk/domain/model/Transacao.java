@@ -1,12 +1,17 @@
 package com.santana.moneytalk.domain.model;
 
+import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transacao {
 
     @Id
@@ -26,8 +31,14 @@ public class Transacao {
 
     private String descricao;
 
-    @Override
-    public String toString(){
-        return  "Transacao [id=" + id + ", valor=" + valor + ", categoria=" + categoria.getNome();
+    public Transacao(TransacaoRequest req, Categoria categoria){
+        Transacao transacao = new Transacao();
+        transacao.setCategoria(categoria);
+        transacao.setDataTransacao(req.dataTransacao());
+        transacao.setValor(req.valor());
+        transacao.setDescricao(req.descricao());
+        transacao.setTipo(req.tipo());
     }
+
+
 }
