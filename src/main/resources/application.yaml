@@ -11,9 +11,9 @@ spring:
           model: openai/gpt-oss-20b
 
   datasource:
-    password: felipe
-    url: jdbc:postgresql://localhost:5432/money-talk
-    username: postgres
+    password: ${PGPASSWORD:felipe}
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:money-talk}
+    username: ${PGUSER:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:

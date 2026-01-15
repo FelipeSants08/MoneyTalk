@@ -1,0 +1,29 @@
+services:
+  java:
+    build: .
+    container_name: money-talk
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - private_network
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: felipe
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: money-talk
+      GROQ_API_KEY: ${GROQ_API_KEY}
+
+  postgres:
+    image: postgres:15
+    container_name: db_moneytalk
+    ports:
+      - "5431:5432"
+    networks:
+      - private_network
+
+networks:
+  private_network:
+    driver: bridge
