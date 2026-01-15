@@ -31,14 +31,6 @@ public class Transacao {
 
     private String descricao;
 
-    public Transacao(TransacaoRequest req, Categoria categoria){
-        Transacao transacao = new Transacao();
-        transacao.setCategoria(categoria);
-        transacao.setDataTransacao(req.dataTransacao());
-        transacao.setValor(req.valor());
-        transacao.setDescricao(req.descricao());
-        transacao.setTipo(req.tipo());
-    }
 
 
 }

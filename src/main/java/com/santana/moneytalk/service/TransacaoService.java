@@ -6,7 +6,9 @@ import com.santana.moneytalk.domain.dto.response.CategoriaResponse;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
 import com.santana.moneytalk.domain.model.Transacao;
+import com.santana.moneytalk.mapper.Mappers;
 import com.santana.moneytalk.repository.TransacaoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,39 +19,42 @@ import java.util.List;
 public class TransacaoService {
 
     private final TransacaoRepository repository;
+    private final CategoriaService categoriaService;
 
 
     public void salvar(Transacao transacao){
         repository.save(transacao);
     }
 
+    @Transactional
+    public TransacaoRequest criarTransacao(TransacaoRequest req){
+        Categoria categoria = categoriaService.buscarOuCriarCategoria(req.categoria());
+        Transacao transacao = Mappers.toTransacao(req);
+        transacao.setCategoria(categoria);
+        salvar(transacao);
+        return req;
+    }
+
     public void alterar(Long id, AlteraTransacao transacao){
-        var transacaoEntity = findById(id);
-        transacaoEntity = Transacao.builder()
-                .valor(transacao.valor() != null ? transacao.valor() : transacaoEntity.getValor())
-                .descricao(transacao.descricao() != null ? transacao.descricao() : transacaoEntity.getDescricao())
-                .dataTransacao(transacao.dataTransacao() != null ? transacao.dataTransacao() : transacaoEntity.getDataTransacao())
+        var transacaoExistente = findById(id);
+        var transacaoAtualizada = Transacao.builder()
+                .id(id)
+                .valor(transacao.valor() != null ? transacao.valor() : transacaoExistente.getValor())
+                .descricao(transacao.descricao() != null ? transacao.descricao() : transacaoExistente.getDescricao())
+                .dataTransacao(transacao.dataTransacao() != null ? transacao.dataTransacao() : transacaoExistente.getDataTransacao())
+                .categoria(transacaoExistente.getCategoria())
+                .tipo(transacaoExistente.getTipo())
                 .build();
-        repository.save(transacaoEntity);
+        repository.save(transacaoAtualizada);
     }
 
     public List<TransacaoResponse> pegarTransacoes(){
         List<Transacao> transacoes = repository.findAll();
         return transacoes.stream()
-                .map(t -> new TransacaoResponse(
-                        t.getId(),
-                        t.getValor(),
-                        new CategoriaResponse(t.getCategoria().getNome()),
-                        t.getTipo().toString(),
-                        t.getDataTransacao().toString(),
-                        t.getDescricao()
-                )).toList();
+                .map(Mappers::toTransacaoResponse)
+                .toList();
     }
 
-    public Transacao mapearTrasacao(TransacaoRequest request, Categoria categoria){
-        Transacao transacao = new Transacao(request, categoria);
-        return transacao;
-    }
 
     public Transacao findById(Long id){
         return repository.findById(id).orElseThrow(

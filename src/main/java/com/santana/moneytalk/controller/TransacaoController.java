@@ -1,12 +1,10 @@
 package com.santana.moneytalk.controller;
 
+import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +22,10 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.OK)
     public List<TransacaoResponse> transacoes(){
         return transacaoService.pegarTransacoes();
+    }
+
+    public TransacaoRequest criar(@RequestBody TransacaoRequest request){
+        return null;
     }
 
 }

@@ -14,14 +14,12 @@ public class ChatService {
     private final TransacaoService transacaoService;
     private ChatClient client;
     private CategoriaService categoriaService;
-    private TransacaoAi transacaoAi;
 
-    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoAi transacaoAi, TransacaoService transacaoService) {
+    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoService transacaoService) {
         this.client = builder
                 .defaultSystem("Você é um consultor financeiro/chatCriarTransacao que vai ajudar o usuário a organizar as suas finanças, ira receber informações do usuário e vai auxilia-lo, responda sempre com o idioma que receber a mensagem")
                 .build();
         this.categoriaService = categoriaService;
-        this.transacaoAi = transacaoAi;
         this.transacaoService = transacaoService;
     }
 
@@ -56,7 +54,7 @@ public class ChatService {
                 .prompt(prompt)
                 .call()
                 .entity(TransacaoRequest.class);
-        transacaoAi.processarESalvar(transacaoRequest);
+        transacaoService.criarTransacao(transacaoRequest);
         return transacaoRequest;
     }
 
