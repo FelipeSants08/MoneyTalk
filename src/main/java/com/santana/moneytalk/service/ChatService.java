@@ -3,7 +3,6 @@ package com.santana.moneytalk.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
-import jakarta.transaction.Transactional;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +11,22 @@ import java.time.LocalDate;
 @Service
 public class ChatService {
 
+    private final TransacaoService transacaoService;
     private ChatClient client;
     private CategoriaService categoriaService;
     private TransacaoAi transacaoAi;
 
-    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoAi transacaoAi) {
+    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoAi transacaoAi, TransacaoService transacaoService) {
         this.client = builder
-                .defaultSystem("Você é um consultor financeiro/chat que vai ajudar o usuário a organizar as suas finanças, ira receber informações do usuário e vai auxilia-lo, responda sempre com o idioma que receber a mensagem")
+                .defaultSystem("Você é um consultor financeiro/chatCriarTransacao que vai ajudar o usuário a organizar as suas finanças, ira receber informações do usuário e vai auxilia-lo, responda sempre com o idioma que receber a mensagem")
                 .build();
         this.categoriaService = categoriaService;
         this.transacaoAi = transacaoAi;
+        this.transacaoService = transacaoService;
     }
 
-    public TransacaoRequest chat(String message){
-
+    public TransacaoRequest chatCriarTransacao(String message){
         String dataAtual = LocalDate.now().toString();
-
         String categorias;
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -35,7 +34,6 @@ public class ChatService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Erro ao serializar JSON");
         }
-
         String prompt = """
                 Você é um especialista em classificação financeira.
                 Sua única tarefa é criar uma instância do objeto JSON 'Transacao' a partir da mensagem enviada pelo usuário.
@@ -54,8 +52,6 @@ public class ChatService {
                 
                 Retorne APENAS o JSON.
                 """.formatted(dataAtual, message, categorias);
-
-
         var transacaoRequest = client
                 .prompt(prompt)
                 .call()
@@ -68,7 +64,7 @@ public class ChatService {
         String transacoes;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            transacoes = mapper.writeValueAsString(transacaoAi.pegarTransacoesAnalise());
+            transacoes = mapper.writeValueAsString(transacaoService.pegarTransacoes());
         }catch (JsonProcessingException e){
             throw new RuntimeException("Erro ao serializar JSON");
         }

@@ -27,6 +27,11 @@ public class CategoriaService {
         return categoria;
     }
 
+    public Categoria buscarOuCriarCategoria(CategoriaRequest request){
+        return pegarPorNome(request.nome())
+                .orElseGet(() -> save(request));
+    }
+
     public Optional<Categoria> pegarPorNome(String nome){
         return repository.pegarPorNome(nome);
     }
