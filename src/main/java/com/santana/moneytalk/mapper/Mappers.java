@@ -41,7 +41,7 @@ public class Mappers {
     }
 
     public static CategoriaResponse toCategoriaResponse(Categoria categoria){
-        CategoriaResponse req = new CategoriaResponse(categoria.getNome());
+        CategoriaResponse req = new CategoriaResponse(categoria.getId(), categoria.getNome());
         return req;
     }
 

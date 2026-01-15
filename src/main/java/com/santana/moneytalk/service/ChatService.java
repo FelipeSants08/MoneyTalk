@@ -12,22 +12,23 @@ import java.time.LocalDate;
 public class ChatService {
 
     private final TransacaoService transacaoService;
-    private ChatClient client;
-    private CategoriaService categoriaService;
+    private final ChatClient client;
+    private final CategoriaService categoriaService;
+    private final ObjectMapper mapper;
 
-    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoService transacaoService) {
+    public ChatService(ChatClient.Builder builder, CategoriaService categoriaService, TransacaoService transacaoService, ObjectMapper mapper) {
         this.client = builder
                 .defaultSystem("Você é um consultor financeiro/chatCriarTransacao que vai ajudar o usuário a organizar as suas finanças, ira receber informações do usuário e vai auxilia-lo, responda sempre com o idioma que receber a mensagem")
                 .build();
         this.categoriaService = categoriaService;
         this.transacaoService = transacaoService;
+        this.mapper = mapper;
     }
 
     public TransacaoRequest chatCriarTransacao(String message){
         String dataAtual = LocalDate.now().toString();
         String categorias;
         try {
-            ObjectMapper mapper = new ObjectMapper();
             categorias = mapper.writeValueAsString(categoriaService.findAll());
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Erro ao serializar JSON");
@@ -61,10 +62,9 @@ public class ChatService {
     public String analiseIa(){
         String transacoes;
         try {
-            ObjectMapper mapper = new ObjectMapper();
             transacoes = mapper.writeValueAsString(transacaoService.pegarTransacoes());
         }catch (JsonProcessingException e){
-            throw new RuntimeException("Erro ao serializar JSON");
+            throw new RuntimeException("Erro ao serializar JSON: " + e.getMessage());
         }
         return client
                 .prompt()

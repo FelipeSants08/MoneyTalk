@@ -1,4 +1,4 @@
 package com.santana.moneytalk.domain.dto.response;
 
-public record CategoriaResponse(String nome) {
+public record CategoriaResponse(Long id, String nome) {
 }

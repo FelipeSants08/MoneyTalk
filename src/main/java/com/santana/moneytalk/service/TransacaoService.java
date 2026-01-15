@@ -2,7 +2,6 @@ package com.santana.moneytalk.service;
 
 import com.santana.moneytalk.domain.dto.request.AlteraTransacao;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
-import com.santana.moneytalk.domain.dto.response.CategoriaResponse;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
 import com.santana.moneytalk.domain.model.Transacao;
