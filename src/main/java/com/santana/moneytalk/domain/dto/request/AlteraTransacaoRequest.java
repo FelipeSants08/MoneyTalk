@@ -4,5 +4,5 @@ import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
-public record AlteraTransacao(Double valor, @PastOrPresent LocalDate dataTransacao, String descricao) {
+public record AlteraTransacaoRequest(Double valor, @PastOrPresent LocalDate dataTransacao, String descricao) {
 }

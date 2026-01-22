@@ -1,6 +1,6 @@
 package com.santana.moneytalk.service;
 
-import com.santana.moneytalk.domain.dto.request.AlteraTransacao;
+import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
@@ -34,7 +34,7 @@ public class TransacaoService {
         return req;
     }
 
-    public void alterar(Long id, AlteraTransacao transacao){
+    public void alterar(Long id, AlteraTransacaoRequest transacao){
         var transacaoExistente = findById(id);
         var transacaoAtualizada = Transacao.builder()
                 .id(id)

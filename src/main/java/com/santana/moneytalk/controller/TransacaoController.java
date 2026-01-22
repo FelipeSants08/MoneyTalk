@@ -1,5 +1,6 @@
 package com.santana.moneytalk.controller;
 
+import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
@@ -25,8 +26,15 @@ public class TransacaoController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public TransacaoRequest criar(@RequestBody TransacaoRequest request){
         return transacaoService.criarTransacao(request);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizar(@PathVariable Long id, @RequestBody AlteraTransacaoRequest request){
+        transacaoService.alterar(id, request);
     }
 
 }
