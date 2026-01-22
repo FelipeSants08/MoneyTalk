@@ -3,6 +3,7 @@ package com.santana.moneytalk.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
+import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class ChatService {
         this.mapper = mapper;
     }
 
-    public TransacaoRequest chatCriarTransacao(String message){
+    public TransacaoResponse chatCriarTransacao(String message){
         String dataAtual = LocalDate.now().toString();
         String categorias;
         try {
@@ -55,8 +56,7 @@ public class ChatService {
                 .prompt(prompt)
                 .call()
                 .entity(TransacaoRequest.class);
-        transacaoService.criarTransacao(transacaoRequest);
-        return transacaoRequest;
+        return transacaoService.criarTransacao(transacaoRequest);
     }
 
     public String analiseIa(){

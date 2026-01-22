@@ -1,6 +1,7 @@
 package com.santana.moneytalk.controller;
 
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
+import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.ChatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class ChatController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TransacaoRequest sendMessage(@RequestBody String message){
+    public TransacaoResponse sendMessage(@RequestBody String message){
        return service.chatCriarTransacao(message);
     }
 

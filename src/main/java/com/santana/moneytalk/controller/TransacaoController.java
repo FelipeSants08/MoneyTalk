@@ -4,6 +4,8 @@ import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
+import jakarta.validation.Valid;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +22,16 @@ public class TransacaoController {
     }
 
     @GetMapping
+    @Cacheable("transacoes")
     @ResponseStatus(HttpStatus.OK)
     public List<TransacaoResponse> transacoes(){
+        //transacaoService.estatisticas();
         return transacaoService.pegarTransacoes();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TransacaoRequest criar(@RequestBody TransacaoRequest request){
+    public TransacaoResponse criar(@Valid @RequestBody TransacaoRequest request){
         return transacaoService.criarTransacao(request);
     }
 
