@@ -6,6 +6,7 @@ import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
 import com.santana.moneytalk.domain.model.TipoTransacao;
 import com.santana.moneytalk.domain.model.Transacao;
+import com.santana.moneytalk.exception.TransacaoNotFound;
 import com.santana.moneytalk.mapper.Mappers;
 import com.santana.moneytalk.repository.TransacaoRepository;
 import jakarta.transaction.Transactional;
@@ -65,7 +66,7 @@ public class TransacaoService {
 
     public Transacao findById(Long id){
         return repository.findById(id).orElseThrow(
-                () -> new RuntimeException("Transacao não encontrada")
+                TransacaoNotFound::new
         );
     }
 //

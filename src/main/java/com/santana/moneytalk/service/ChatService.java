@@ -48,7 +48,7 @@ public class ChatService {
                 - **Mensagem do Usuário**: "%s"
                 - **Categorias Existentes**: Use apenas uma das seguintes categorias se for um bom fit: [%s].
                 - **Regra de Criação de Categoria**: Se nenhuma das categorias existentes for adequada, você DEVE criar uma nova categoria relevante para a transação.
-                - **Estrutura do Objeto Transacao**: Double valor, Objeto Categoria (com nome), TipoTransacao enum(ENTRADA, SAIDA), dataTransacao (Data atual se não for especificada), e descricao (personalizada pela IA).
+                - **Estrutura do Objeto Transacao**: Double valor, Objeto Categoria (com nome), TipoTransacao enum(ENTRADA, SAIDA), dataTransacao (Data atual se não for especificada e não pode ser no futuro), e descricao (personalizada pela IA).
                 
                 Retorne APENAS o JSON.
                 """.formatted(dataAtual, message, categorias);
