@@ -4,6 +4,7 @@ import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("transacoes")
+@Tag(name= "Transação", description = "API de gerenciamento de transações")
 public class TransacaoController {
 
     private final TransacaoService transacaoService;
