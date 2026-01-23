@@ -59,6 +59,9 @@ public class TransacaoService {
                 .toList();
     }
 
+    public void deletarTransacao(Long id){
+        repository.delete(findById(id));
+    }
 
     public Transacao findById(Long id){
         return repository.findById(id).orElseThrow(

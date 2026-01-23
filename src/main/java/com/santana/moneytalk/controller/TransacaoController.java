@@ -43,4 +43,10 @@ public class TransacaoController {
         transacaoService.alterar(id, request);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id){
+        transacaoService.deletarTransacao(id);
+    }
+
 }
