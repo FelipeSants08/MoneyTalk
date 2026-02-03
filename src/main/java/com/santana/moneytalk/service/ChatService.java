@@ -67,7 +67,7 @@ public class ChatService {
             throw new RuntimeException("Erro ao serializar JSON: " + e.getMessage());
         }
         return client
-                .prompt()
+                .prompt("Responda com poucas linhas de texto, no máximo 5 linhas")
                 .user("Faça a análise das seguintes transações: " + transacoes)
                 .call()
                 .content();

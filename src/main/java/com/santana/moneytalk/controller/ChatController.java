@@ -1,5 +1,6 @@
 package com.santana.moneytalk.controller;
 
+import com.santana.moneytalk.docs.IChatController;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.ChatService;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("chat")
-@Tag(name = "IA", description = "Operações da IA na API")
-public class ChatController {
+public class ChatController implements IChatController {
 
     private final ChatService service;
 
@@ -25,17 +25,13 @@ public class ChatController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(description = "Criar uma transação com linguagem natural", summary = "Transação com IA")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Transação criada"),
-            @ApiResponse(responseCode = "400", description = "Falta de dados")
-    })
     public TransacaoResponse sendMessage(@RequestBody String message){
        return service.chatCriarTransacao(message);
     }
 
     @GetMapping("analise")
-    public ResponseEntity<String> pegarAnalise(){
-        return ResponseEntity.ok(service.analiseIa());
+    @ResponseStatus(HttpStatus.OK)
+    public String pegarAnalise(){
+        return service.analiseIa();
     }
 }

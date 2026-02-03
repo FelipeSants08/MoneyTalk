@@ -1,6 +1,8 @@
 package com.santana.moneytalk.controller;
 
+import com.santana.moneytalk.docs.ITransacaoController;
 import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
+import com.santana.moneytalk.domain.dto.request.CategoriaRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
@@ -14,8 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("transacoes")
-@Tag(name= "Transação", description = "API de gerenciamento de transações")
-public class TransacaoController {
+public class TransacaoController implements ITransacaoController {
 
     private final TransacaoService transacaoService;
 
@@ -41,6 +42,11 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable Long id, @RequestBody AlteraTransacaoRequest request){
         transacaoService.alterar(id, request);
+    }
+
+    @PutMapping("{id}/categoria")
+    public void atualizarCategoria(Long id, CategoriaRequest request) {
+        transacaoService.alterarCategoria(id, request);
     }
 
     @DeleteMapping("/{id}")

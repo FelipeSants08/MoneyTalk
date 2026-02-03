@@ -1,6 +1,7 @@
 package com.santana.moneytalk.service;
 
 import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
+import com.santana.moneytalk.domain.dto.request.CategoriaRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
@@ -38,6 +39,13 @@ public class TransacaoService {
         salvar(transacao);
         TransacaoResponse response = Mappers.toTransacaoResponse(transacao);
         return response;
+    }
+
+    public void alterarCategoria(Long id, CategoriaRequest request){
+        Transacao transacao = findById(id);
+        Categoria categoria = categoriaService.buscarOuCriarCategoria(request);
+        transacao.setCategoria(categoria);
+        repository.save(transacao);
     }
 
     public void alterar(Long id, AlteraTransacaoRequest transacao){
