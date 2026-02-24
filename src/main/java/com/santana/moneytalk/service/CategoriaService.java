@@ -28,8 +28,14 @@ public class CategoriaService {
     }
 
     public Categoria buscarOuCriarCategoria(CategoriaRequest request){
-        return pegarPorNome(request.nome())
-                .orElseGet(() -> save(request));
+        String nomeNormalizado = request.nome().trim().toLowerCase();
+
+        return pegarPorNome(nomeNormalizado)
+                .orElseGet(() -> {
+                    Categoria categoria = new Categoria();
+                    categoria.setNome(nomeNormalizado);
+                    return repository.save(categoria);
+                });
     }
 
     public Optional<Categoria> pegarPorNome(String nome){

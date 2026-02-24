@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
+import com.santana.moneytalk.domain.model.Transacao;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ChatService {
@@ -59,16 +61,16 @@ public class ChatService {
         return transacaoService.criarTransacao(transacaoRequest);
     }
 
-    public String analiseIa(){
-        String transacoes;
+    public String analiseIa(List<Transacao> transacoes){
+        String transacoesString = "";
         try {
-            transacoes = mapper.writeValueAsString(transacaoService.pegarTransacoes());
+            transacoesString = mapper.writeValueAsString(transacoes);
         }catch (JsonProcessingException e){
             throw new RuntimeException("Erro ao serializar JSON: " + e.getMessage());
         }
         return client
-                .prompt("Responda com poucas linhas de texto, no máximo 5 linhas")
-                .user("Faça a análise das seguintes transações: " + transacoes)
+                .prompt("Responda com poucas palavras de texto, no máximo 950 caracteres, não use emojis, apenas texto, se possível não pule nem linha, o texto sera salvo no banco de dados como uma string normal, tente organizar")
+                .user("Faça a análise das seguintes transações: " + transacoesString)
                 .call()
                 .content();
     }

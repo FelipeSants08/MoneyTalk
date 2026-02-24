@@ -6,7 +6,6 @@ import com.santana.moneytalk.domain.dto.request.CategoriaRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -45,7 +44,7 @@ public class TransacaoController implements ITransacaoController {
     }
 
     @PutMapping("{id}/categoria")
-    public void atualizarCategoria(Long id, CategoriaRequest request) {
+    public void atualizarCategoria(@PathVariable Long id, CategoriaRequest request) {
         transacaoService.alterarCategoria(id, request);
     }
 

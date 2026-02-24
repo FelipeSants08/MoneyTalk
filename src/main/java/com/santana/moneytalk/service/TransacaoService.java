@@ -5,22 +5,20 @@ import com.santana.moneytalk.domain.dto.request.CategoriaRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
-import com.santana.moneytalk.domain.model.TipoTransacao;
 import com.santana.moneytalk.domain.model.Transacao;
 import com.santana.moneytalk.exception.TransacaoNotFound;
 import com.santana.moneytalk.mapper.Mappers;
 import com.santana.moneytalk.repository.TransacaoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TransacaoService {
 
     private final TransacaoRepository repository;
@@ -36,6 +34,7 @@ public class TransacaoService {
         Categoria categoria = categoriaService.buscarOuCriarCategoria(req.categoria());
         Transacao transacao = Mappers.toTransacao(req);
         transacao.setCategoria(categoria);
+        log.info("Salvando a transacao {}", transacao.getDescricao());
         salvar(transacao);
         TransacaoResponse response = Mappers.toTransacaoResponse(transacao);
         return response;

@@ -1,15 +1,12 @@
 package com.santana.moneytalk.controller;
 
 import com.santana.moneytalk.docs.IChatController;
-import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
+import com.santana.moneytalk.domain.dto.request.CriarMetricaPorData;
+import com.santana.moneytalk.domain.dto.response.MetricaResponse;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.ChatService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.santana.moneytalk.service.MetricaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController implements IChatController {
 
     private final ChatService service;
+    private final MetricaService metricaService;
 
-    public ChatController(ChatService service) {
+    public ChatController(ChatService service, MetricaService metricaService) {
         this.service = service;
+        this.metricaService = metricaService;
     }
 
     @PostMapping
@@ -29,9 +28,9 @@ public class ChatController implements IChatController {
        return service.chatCriarTransacao(message);
     }
 
-    @GetMapping("analise")
+    @PostMapping("analise")
     @ResponseStatus(HttpStatus.OK)
-    public String pegarAnalise(){
-        return service.analiseIa();
+    public MetricaResponse pegarAnalise(@RequestBody CriarMetricaPorData dto){
+        return metricaService.gerarMetrica(dto);
     }
 }

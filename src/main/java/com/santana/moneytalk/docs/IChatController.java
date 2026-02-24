@@ -1,5 +1,7 @@
 package com.santana.moneytalk.docs;
 
+import com.santana.moneytalk.domain.dto.request.CriarMetricaPorData;
+import com.santana.moneytalk.domain.dto.response.MetricaResponse;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,5 +18,5 @@ public interface IChatController {
     })
     TransacaoResponse sendMessage(String message);
 
-    String pegarAnalise();
+    MetricaResponse pegarAnalise(CriarMetricaPorData dto);
 }
