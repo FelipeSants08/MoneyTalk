@@ -11,17 +11,6 @@ import java.util.Optional;
 
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
-    @Query("""
-        SELECT SUM(t.valor) FROM Transacao t WHERE t.tipo = 'SAIDA'
-        AND t.dataTransacao BETWEEN :dataComeco AND :dataFim
-    """)
-    Optional<Double> totalDeSaidaNoPeriodo(LocalDate dataComeco, LocalDate dataFim);
-
-    @Query("""
-        SELECT SUM(t.valor) FROM Transacao t WHERE t.tipo = 'ENTRADA'
-        AND t.dataTransacao BETWEEN :dataComeco AND :dataFim
-    """)
-    Optional<Double> totalDeEntradasNoPeriodo(LocalDate dataComeco, LocalDate dataFim);
 
     @Query("""
         SELECT t FROM Transacao t WHERE t.dataTransacao BETWEEN :inicio AND :fim

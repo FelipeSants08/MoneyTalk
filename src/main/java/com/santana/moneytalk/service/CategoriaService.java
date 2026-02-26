@@ -15,9 +15,9 @@ public class CategoriaService {
 
     private final CategoriaRepository repository;
 
-    public Categoria save(CategoriaRequest request){
-        return repository.save(dto(request));
-    }
+//    public Categoria save(CategoriaRequest request){
+//        return repository.save(dto(request));
+//    }
     public List<Categoria> findAll(){
         return repository.findAll();
     }

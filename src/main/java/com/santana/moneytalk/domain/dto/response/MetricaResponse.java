@@ -4,11 +4,11 @@ import com.santana.moneytalk.domain.model.Metrica;
 
 import java.time.LocalDate;
 
-public record MetricaResponse(Long id, LocalDate dataReferencia, Integer quantidadeTransacao, Double saldo, Double media,
+public record MetricaResponse(Long id, LocalDate dataReferencia, Integer quantidadeTransacao, Double saldo, Double mediaSaida,
                               Double totalEntradas, Double totalSaida, String analiseIa, String categoriaMaisCara) {
     public MetricaResponse(Metrica metrica){
         this(metrica.getId(), metrica.getDataReferencia(), metrica.getQuantidadeTransacao(),
-                metrica.getSaldo(), metrica.getMedia(), metrica.getTotalEntradas(), metrica.getTotalSaida(),
+                metrica.getSaldo(), metrica.getMediaSaida(), metrica.getTotalEntradas(), metrica.getTotalSaida(),
                 metrica.getAnaliseIa(), metrica.getCategoriaMaisCara());
     }
 }
