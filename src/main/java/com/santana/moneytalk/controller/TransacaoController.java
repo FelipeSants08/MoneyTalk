@@ -7,7 +7,6 @@ import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.service.TransacaoService;
 import jakarta.validation.Valid;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +23,8 @@ public class TransacaoController implements ITransacaoController {
     }
 
     @GetMapping
-    @Cacheable("transacoes")
     @ResponseStatus(HttpStatus.OK)
     public List<TransacaoResponse> transacoes(){
-        //transacaoService.estatisticas();
         return transacaoService.pegarTransacoes();
     }
 
@@ -44,7 +41,8 @@ public class TransacaoController implements ITransacaoController {
     }
 
     @PutMapping("{id}/categoria")
-    public void atualizarCategoria(@PathVariable Long id, CategoriaRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public void atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaRequest request) {
         transacaoService.alterarCategoria(id, request);
     }
 

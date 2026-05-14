@@ -15,10 +15,14 @@ spring:
     url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:money-talk}
     username: ${PGUSER:postgres}
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
 
 server:
   port: 8080
+#
+#telegram:
+#  bot:
+#    token: ""
+#    username: "MoneyTalkAplicationBot"

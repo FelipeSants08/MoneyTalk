@@ -25,21 +25,24 @@ public class TransacaoService {
     private final CategoriaService categoriaService;
 
 
-    public void salvar(Transacao transacao){
-        repository.save(transacao);
-    }
+
 
     @Transactional
     public TransacaoResponse criarTransacao(TransacaoRequest req){
         Categoria categoria = categoriaService.buscarOuCriarCategoria(req.categoria());
+
         Transacao transacao = Mappers.toTransacao(req);
+
         transacao.setCategoria(categoria);
+
         log.info("Salvando a transacao {}", transacao.getDescricao());
-        salvar(transacao);
-        TransacaoResponse response = Mappers.toTransacaoResponse(transacao);
-        return response;
+
+        repository.save(transacao);
+
+        return Mappers.toTransacaoResponse(transacao);
     }
 
+    @Transactional
     public void alterarCategoria(Long id, CategoriaRequest request){
         Transacao transacao = findById(id);
         Categoria categoria = categoriaService.buscarOuCriarCategoria(request);
@@ -76,21 +79,7 @@ public class TransacaoService {
                 TransacaoNotFound::new
         );
     }
-//
-//    public void estatisticas(){
-//        List<TransacaoResponse> transacoes = pegarTransacoes();
-//
-//        Map<String, DoubleSummaryStatistics> stats = transacoes.stream()
-//                .filter(t -> t.tipoTransacao() == TipoTransacao.SAIDA)
-//                .collect(Collectors.groupingBy(
-//                    t -> t.categoria().nome(),
-//                    Collectors.summarizingDouble(TransacaoResponse::valor)
-//                ));
-//
-//        stats.forEach((key, stat) -> System.out.println(key + " : " + "\nTotal: " + stat.getSum()
-//        + "\nMedia: " + stat.getAverage() + "\nMin: " + stat.getMin() + "\nMax: " + stat.getMax()));
-//
-//    }
+
 
 
 }

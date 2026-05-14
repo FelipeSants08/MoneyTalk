@@ -51,19 +51,9 @@ public class Metrica {
     public Metrica(List<Transacao> transacoes, String analiseIa, String categoriaMaisCara) {
         this.dataReferencia = LocalDate.now();
         this.quantidadeTransacao = transacoes.size();
-        this.totalEntradas = calcularTotal(transacoes, TipoTransacao.ENTRADA);
-        this.totalSaida = calcularTotal(transacoes, TipoTransacao.SAIDA);
         this.saldo = this.totalEntradas - this.totalSaida;
-        this.mediaSaida = transacoes.stream().filter(t -> t.getTipo() == TipoTransacao.SAIDA)
-                .mapToDouble(Transacao::getValor).average().orElse(0.0);
         this.analiseIa = analiseIa;
         this.categoriaMaisCara = categoriaMaisCara;
     }
 
-    private Double calcularTotal(List<Transacao> transacoes, TipoTransacao tipoTransacao) {
-        return transacoes.stream()
-                .filter(t -> t.getTipo() == tipoTransacao)
-                .mapToDouble(Transacao::getValor)
-                .sum();
-    }
 }
