@@ -1,6 +1,6 @@
 package com.santana.moneytalk.controller;
 
-import com.santana.moneytalk.docs.IChatController;
+import com.santana.moneytalk.infra.docs.IChatController;
 import com.santana.moneytalk.domain.dto.request.CriarMetricaPorData;
 import com.santana.moneytalk.domain.dto.response.MetricaResponse;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;

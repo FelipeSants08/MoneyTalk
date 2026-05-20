@@ -6,7 +6,7 @@ import com.santana.moneytalk.domain.dto.request.TransacaoRequest;
 import com.santana.moneytalk.domain.dto.response.TransacaoResponse;
 import com.santana.moneytalk.domain.model.Categoria;
 import com.santana.moneytalk.domain.model.Transacao;
-import com.santana.moneytalk.exception.TransacaoNotFound;
+import com.santana.moneytalk.infra.exception.TransacaoNotFound;
 import com.santana.moneytalk.mapper.Mappers;
 import com.santana.moneytalk.repository.TransacaoRepository;
 import jakarta.transaction.Transactional;

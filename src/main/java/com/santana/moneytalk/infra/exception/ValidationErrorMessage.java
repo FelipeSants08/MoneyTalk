@@ -1,4 +1,4 @@
-package com.santana.moneytalk.exception;
+package com.santana.moneytalk.infra.exception;
 
 import org.springframework.validation.FieldError;
 

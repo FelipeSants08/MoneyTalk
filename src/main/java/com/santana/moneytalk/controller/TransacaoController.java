@@ -1,6 +1,6 @@
 package com.santana.moneytalk.controller;
 
-import com.santana.moneytalk.docs.ITransacaoController;
+import com.santana.moneytalk.infra.docs.ITransacaoController;
 import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.CategoriaRequest;
 import com.santana.moneytalk.domain.dto.request.TransacaoRequest;

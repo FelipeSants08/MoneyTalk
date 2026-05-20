@@ -1,4 +1,4 @@
-package com.santana.moneytalk.config;
+package com.santana.moneytalk.infra.docs;
 
 
 import io.swagger.v3.oas.models.OpenAPI;

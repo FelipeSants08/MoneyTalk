@@ -21,6 +21,10 @@ spring:
 
 server:
   port: 8080
+
+api:
+  security:
+    token: ${JWT_SECRET:12345}
 #
 #telegram:
 #  bot:

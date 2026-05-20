@@ -1,4 +1,4 @@
-package com.santana.moneytalk.docs;
+package com.santana.moneytalk.infra.docs;
 
 import com.santana.moneytalk.domain.dto.request.AlteraTransacaoRequest;
 import com.santana.moneytalk.domain.dto.request.CategoriaRequest;

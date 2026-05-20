@@ -1,4 +1,4 @@
-package com.santana.moneytalk.exception;
+package com.santana.moneytalk.infra.exception;
 
 public class TransacaoNotFound extends RuntimeException {
     public TransacaoNotFound() {
